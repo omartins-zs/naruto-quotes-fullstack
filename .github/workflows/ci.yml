@@ -1,0 +1,97 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  api:
+    name: API - pytest
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: naruto_api
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: naruto_api/requirements-dev.txt
+
+      - name: Instalar dependencias
+        run: pip install -r requirements-dev.txt
+
+      - name: Rodar testes com cobertura
+        run: python -m pytest
+
+  client:
+    name: Client - vitest
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: naruto-client
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: naruto-client/package-lock.json
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Rodar testes com cobertura
+        run: npm run test:coverage
+
+      - name: Validar o build de producao
+        run: npm run build
+
+  e2e:
+    name: E2E - Playwright
+    runs-on: ubuntu-latest
+    needs: [api, client]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: e2e/package-lock.json
+
+      - name: Preparar variaveis de ambiente
+        run: cp .env.example .env
+
+      - name: Subir os containers
+        run: docker compose up -d --build --wait
+
+      - name: Instalar dependencias
+        run: npm ci
+        working-directory: e2e
+
+      - name: Instalar navegadores
+        run: npx playwright install --with-deps
+        working-directory: e2e
+
+      - name: Rodar testes end-to-end
+        run: npx playwright test
+        working-directory: e2e
+
+      - name: Publicar relatorio
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: e2e/playwright-report/
+          retention-days: 7
+
+      - name: Logs dos containers em caso de falha
+        if: failure()
+        run: docker compose logs
