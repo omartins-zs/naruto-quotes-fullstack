@@ -11,11 +11,17 @@ export const Button = styled.button`
   cursor: pointer;
   box-shadow: #332c36 3px 3px;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: #a40000;
   }
 
-  &:focus {
-    outline: none;
+  &:disabled {
+    cursor: progress;
+    opacity: 0.7;
+  }
+
+  &:focus-visible {
+    outline: 3px solid #332c36;
+    outline-offset: 2px;
   }
 `;
