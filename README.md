@@ -18,9 +18,11 @@
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Playwright](https://img.shields.io/badge/Playwright-E2E-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)](https://playwright.dev/)
 
+[![CI](https://github.com/omartins-zs/naruto-quotes-fullstack/actions/workflows/ci.yml/badge.svg)](https://github.com/omartins-zs/naruto-quotes-fullstack/actions/workflows/ci.yml)
 [![Testes](https://img.shields.io/badge/testes-134%20passando-success?style=flat-square)](#-testes)
 [![Cobertura API](https://img.shields.io/badge/cobertura%20API-100%25-success?style=flat-square)](#-testes)
 [![Cobertura Client](https://img.shields.io/badge/cobertura%20client-100%25-success?style=flat-square)](#-testes)
+[![Licença MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-blue?style=flat-square)](./LICENSE)
 
 </div>
 
@@ -329,7 +331,7 @@ naruto-quotes-fullstack/
 
 ## 📝 Melhorias Futuras
 
-- [ ] Adicionar CI no GitHub Actions rodando as três suítes
+- [x] Adicionar CI no GitHub Actions rodando as três suítes
 - [ ] Publicar as imagens no Docker Hub ou GitHub Container Registry
 - [ ] Endpoint de busca por personagem (`/quotes?speaker=naruto`)
 - [ ] Cache HTTP nas respostas da API
@@ -346,6 +348,12 @@ naruto-quotes-fullstack/
 - `npx playwright test --ui` abre o modo interativo, ótimo para depurar E2E.
 - `npm run test:watch` no client roda os testes a cada alteração de arquivo.
 - Os relatórios de cobertura ficam em `naruto_api/coverage_html/` e `naruto-client/coverage/`.
+
+---
+
+## 📄 Licença
+
+Distribuído sob a licença MIT. Veja [LICENSE](./LICENSE) para mais informações.
 
 ---
 
