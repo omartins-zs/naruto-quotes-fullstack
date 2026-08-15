@@ -1,108 +1,52 @@
-<h1 align="center"> Naruto Client </h1>
+# ⚛️ Naruto Quotes Client
 
+Front-end em React 19 + Vite 6 que consome a Naruto Quotes API.
 
-<h1 align="center">
-    <img alt="Nauto Gif" width="800" height="400" title="" src="./src/images/2NP90DSQce.gif" />
-</h1>
+Parte do monorepo **[naruto-quotes-fullstack](../README.md)**.
 
+## Rodar
 
-<p align="center">Pasta Naruto server</p>
-
-# Running locally
-With node_modules installed, install the dependencies with:
-```sh
+```bash
 npm install
+npm run dev
 ```
 
+Aplicação em http://localhost:3000 (a API precisa estar de pé na 3333).
 
-and finally run:
-```sh
-yarn start
+## Scripts
+
+| Comando | Função |
+| --- | --- |
+| `npm run dev` | Servidor de desenvolvimento |
+| `npm run build` | Gera o bundle em `dist/` |
+| `npm run preview` | Serve o bundle gerado |
+| `npm test` | Roda os testes |
+| `npm run test:watch` | Testes em modo watch |
+| `npm run test:coverage` | Testes com relatório de cobertura |
+
+## Testes
+
+46 testes com Vitest, Testing Library e MSW. Threshold de 90% configurado em
+`vite.config.js` — o build de teste falha se a cobertura cair.
+
+## Como a API é chamada
+
+O client sempre chama `/api`, nunca uma URL absoluta:
+
+- **desenvolvimento** — o proxy do Vite redireciona `/api` para `API_PROXY_TARGET`
+- **Docker** — o nginx redireciona `/api` para o container da API
+
+Por isso o mesmo bundle roda em qualquer máquina, sem rebuild.
+
+## Estrutura
 
 ```
+src/
+├── components/    # Button, Quotes, GlobalStyle
+├── hooks/         # useQuote: busca, loading e erro
+├── pages/app/     # App
+├── services/      # quotesService e audioService
+└── mocks/         # handlers do MSW
+```
 
-
-#### **Layout**
-
-- **[HTML](https://www.w3schools.com/html/)**
-- **[CSS](https://www.w3schools.com/css/)**
-- **[JS](https://www.w3schools.com/js/)**
-- **[React Js](https://www.w3schools.com/REACT/DEFAULT.ASP)**
-
-#### **Utilitários**
-
-<!-- - **Repositório implementação de referência: [github-api-interface](https://github.com/benits/github-api-interface)** -->
-<!-- - **Instutor: [Matheus Benites](https://github.com/benits)** -->
-- **Editor: [Visual Studio Code](https://code.visualstudio.com/)**
-- **Markdown: [StackEdit](https://stackedit.io/)**, **[Markdown Emoji](https://gist.github.com/rxaviers/7360908)**
-
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Documentação completa em [`../docs/`](../docs).
